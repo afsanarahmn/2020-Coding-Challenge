@@ -25,6 +25,7 @@ scoreboard = [
     {
     "id": 4,
     "name": "Florida Panthers", 
+
     "score": 1
     },
 
@@ -45,12 +46,13 @@ def increase_score():
     global scoreboard
 
     json_data = request.get_json()   
-    team_id = json_data["id"]  
+    team_id = json_data.get("id")  
     
     for team in scoreboard:
         if team["id"] == team_id:
             team["score"] += 1
-
+            break
+    scoreboard.sort(key = lambda x: x["score"], reverse=True)
     return jsonify(scoreboard=scoreboard)
 
 
